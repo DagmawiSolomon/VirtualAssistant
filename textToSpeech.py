@@ -11,7 +11,7 @@ class ReadNews:
         self.engine.setProperty("volume", 1.0)
         self.address = "Addis Ababa"
         self.name = "John Doe"
-        self.url_locations = 'https://nominatim.openstreetmap.org/search/' + urllib.parse.quote(self.address) +'?format=json'
+        self.url_locations = url_locations = f'https://nominatim.openstreetmap.org/search?q={urllib.parse.quote(self.address)}&format=json'
         self.news_instance = News(self.name, self.url_locations, self.address)
     
     def read_loud(self, text):

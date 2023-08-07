@@ -5,6 +5,7 @@ class SpeechRecognition:
     def __init__(self):
         self.news = ReadNews()
         self.recognizer = sr.Recognizer()
+        
 
     def interpret_speech(self, text):
         if text.lower() == "can you read me the headlines":

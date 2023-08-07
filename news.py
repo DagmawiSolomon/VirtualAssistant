@@ -3,6 +3,7 @@ import json
 import urllib.parse
 from datetime import datetime
 
+
 def get_time_period(current_hour):
     if 5 <= int(current_hour) < 12:
         return "Morning"
@@ -24,7 +25,12 @@ class News:
         self.name = name
         self.url_location = url_location
         self.address = address
-        self.response = requests.get(url_location).json()
+        try:
+            self.response = requests.get(url_location).json()
+        except requests.exceptions.RequestException as e:
+            print("Error fetching JSON data:", e)
+            print(self.url_location)
+            self.response = None 
 
     def get_opening_greeting(self):
         current_time = datetime.now()
@@ -65,13 +71,6 @@ class News:
         news_response = requests.get(news_url, params=news_params, headers={"Authorization": f"Bearer {news_api_key}"})
         news_data = json.loads(news_response.text)
         return news_data["articles"]
-address = "Addis Ababa"
-name = "John Doe"
-url_locations = 'https://nominatim.openstreetmap.org/search/' + urllib.parse.quote(address) +'?format=json'
-todays_news = News(name, url_locations, address)
-"""
-print(todays_news.get_opening_greeting())
-print(todays_news.get_weather(weather_url="https://api.openweathermap.org/data/2.5/weather", weather_api_key="5e015bee876fa980cbd632e0536d4840"))
-print("---"*50)
-print(todays_news.get_headlines(news_api_key="c08685d1de5f4a2e894b2161a85cf39d"))
-"""
+
+
+
